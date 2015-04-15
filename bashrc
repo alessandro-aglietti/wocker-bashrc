@@ -56,7 +56,7 @@ wocker() {
 
       # Use existing WordPress files to run a container
       elif [[ $cname && -d ~/data/${cname} ]]; then
-        docker run -d --name $cname -p 80:80 -v ~/data/${cname}:/var/www/wordpress:rw $image
+        docker run -d --name $cname -p 80:80,3306:3306 -v ~/data/${cname}:/var/www/wordpress:rw $image
 
       # Or copy WordPress files from the image to run a container
       else
@@ -76,7 +76,7 @@ wocker() {
         mv ~/data/${cid}/wordpress ~/data/${dirname} && \
         rm -rf ~/data/${cid} && \
         docker rm -f $(docker ps -l -q) && \
-        docker run -d --name $cname -p 80:80 -v ~/data/${dirname}:/var/www/wordpress:rw $image
+        docker run -d --name $cname -p 80:80,3306:3306 -v ~/data/${dirname}:/var/www/wordpress:rw $image
       fi
 
       ;;
